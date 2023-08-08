@@ -14,14 +14,14 @@ pub fn Page(cx: Scope) -> impl IntoView {
     let data = create_resource(cx, id, move |id| async move { get_something(id).await });
     let link_one = "/hello";
 
-    let rel_one = move || format!("/{}#h1", id());
-    let rel_two = move || format!("/{}#h2", id());
+    let rel_one = format!("/{}#h1", "hello");
+    let rel_two = format!("/{}#h2", "hello");
     view! { cx,
         <nav class="flex items-center justify-center gap-4">
             <A href="/">"/"</A>
-            <A href=link_one>{link_one}</A>
-            <A href=rel_one>{rel_one}</A>
-            <A href=rel_two>{rel_two}</A>
+            <A href="/hello">{link_one}</A>
+            <A href=rel_one.clone()>{rel_one}</A>
+            <A href=rel_two.clone()>{rel_two}</A>
         </nav>
         <Transition fallback=|| ()>
             {move || match data.read(cx) {
